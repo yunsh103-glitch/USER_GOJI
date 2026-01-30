@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚏 동작 CALL 버스 - 규제샌드박스 실증 위한 이용자 고지 </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .notice-header {
+            background: linear-gradient(135deg, #1AA459 0%, #22c56b 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px 16px 0 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notice-header::before {
+            content: '';
+            position: absolute;
+            right: -50px;
+            bottom: -20px;
+            width: 350px;
+            height: 200px;
+            background-image: url('bus.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .notice-header > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .notice-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .notice-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .notice-header p {
+            font-size: 15px;
+            opacity: 0.9;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .notice-content {
+            background: white;
+            padding: 40px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .section {
+            margin-bottom: 36px;
+            padding-bottom: 36px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #167B3B;
+            margin-bottom: 20px;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background-color: #1AA459;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            padding: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 15px;
+        }
+
+        .info-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #1AA459;
+            font-weight: bold;
+        }
+
+        .info-list li strong {
+            color: #167B3B;
+        }
+
+        /* image-placeholder 기본 스타일은 image-container 내에서 정의됨 */
+
+        .image-placeholder-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .image-placeholder p {
+            color: #868e96;
+            font-size: 14px;
+        }
+
+        /* 이미지 컨테이너 - 2장 가로 나열 */
+        .image-container {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            margin-left: 20px; 
+        }
+
+        .image-placeholder {
+            flex: 1;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px dashed #ced4da;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* 실제 이미지 사용 시 아래 클래스 사용 */
+        .approval-image {
+            flex: 1;
+            width: 100%;
+            max-width: calc(50% - 8px);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            object-fit: contain;
+        }
+
+        .highlight-box {
+            background-color: #e7f9ef;
+            border-left: 4px solid #1AA459;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+            margin-left: 20px; 
+        }
+
+        .highlight-box p {
+            font-size: 14px;
+            color: #167B3B;
+        }
+
+        .contact-box {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+            margin-left: 20px; 
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            padding: 8px 0;
+            font-size: 15px;
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            background-color: #DCF9E8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 17px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #868e96;
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: #1AA459;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .sub-note {
+            font-size: 13px;
+            color: #868e96;
+            margin-top: -4px;
+            padding-left: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 12px;
+            }
+
+            .notice-header {
+                padding: 30px 20px;
+            }
+
+            .notice-header::before {
+                width: 200px;
+                height: 120px;
+                right: -30px;
+                bottom: -10px;
+            }
+
+            .notice-header h1 {
+                font-size: 20px;
+            }
+
+            .notice-content {
+                padding: 24px 20px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .info-list li {
+                font-size: 14px;
+            }
+
+            .image-container {
+                flex-direction: column;
+            }
+
+            .image-placeholder {
+                padding: 30px 15px;
+            }
+
+            .approval-image {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="notice-header">
+            <h1>📢 규제샌드박스 실증사업을 위한 이용자 대상 고지</h1><br>
+            <p>수요응답형 마을버스 동작구 DRT(동작 CALL 버스)는 <br>
+            「스마트시티 규제샌드박스」 제도를 통해 <br>
+            국토교통부의 승인을 받아 실증 중인 서비스입니다.<br>
+            <br>
+            이용자 여러분께서는 아래 내용을 확인해 주시기 바랍니다.</p>
+        </header>
+
+        <main class="notice-content">
+            <!-- 섹션 1: 규제샌드박스 승인 사실 및 기간 -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">1</span>
+                    규제샌드박스 승인 사실 및 기간
+                </h2>
+                <ul class="info-list">
+                    <li><strong>승인번호:</strong> 제 51 호</li>
+                    <li><strong>명칭:</strong> 수요응답형 마을버스 동작구 DRT 사업</li>
+                    <li><strong>사업 기간:</strong> 2025년 9월 15일 ~ 2028년 3월 21일</li>
+                    <li><strong>승인 확인서:</strong></li>
+                </ul>
+                
+                <!-- 승인 확인서 이미지 영역 (2장 가로 나열) -->
+                <div class="image-container">
+                    <img src="page_001.webp" alt="규제샌드박스 승인 확인서 1" class="approval-image">
+                    <img src="page_002.webp" alt="규제샌드박스 승인 확인서 2" class="approval-image">
+                </div>
+            </section>
+
+            <!-- 섹션 2: 사업 개요 -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">2</span>
+                    사업 개요
+                </h2>
+                <ul class="info-list">
+                    <li><strong>서비스 명칭:</strong> 수요응답형 마을버스 동작구 DRT (동작 CALL 버스)</li>
+                    <li><strong>기술 및 서비스 내용:</strong> 탑승객의 호출에 따라 실시간으로 경로를 생성하여 운행 <br>
+                        도심 지역 내에서 마을버스 면허 사업자가 수요응답형 운행 체계를 도입ㆍ적용하여 운행하는 마을버스형 DRT를<br>
+                        제공하여 동작구 내 교통 소외 지역의 이동권 보장 및 환승 편의 제공</li>
+                </ul>
+            </section>
+
+            <!-- 섹션 3: 이용자 안내 및 유의사항 -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">3</span>
+                    이용자 안내 및 유의사항
+                </h2>
+                <ul class="info-list">
+                    <li><strong>이용 방법:</strong> 전용 앱(App) 호출 또는 전화 예약</li>
+                    <li><strong>운행 시간:</strong> 매일 06:00 ~ 22:00 (주말ㆍ공휴일 1대만 운행)</li>
+                </ul>
+                <p class="sub-note">※ 마지막 호출은 21:30까지 가능합니다.</p>
+                <ul class="info-list">
+                    <li><strong>이용 조건:</strong> 동작구 실증 구역 내 지정 정류장(가상 정류장 포함) 승하차 원칙</li>
+                </ul>
+            </section>
+
+            <!-- 섹션 4: 이용자 보호 및 손해배상 -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">4</span>
+                    이용자 보호 및 손해배상
+                </h2>
+                <ul class="info-list">
+                    <li><strong>책임보험 가입:</strong> 규제샌드박스 전용 책임보험 가입 완료</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>사고 발생 시 대인/대물 배상 한도는 관련 법령 및 보험 약관에 의거하여 보장됩니다.</p>
+                </div>
+                <ul class="info-list">
+                    <li><strong>이용자 문의 대응:</strong></li>
+                </ul>
+                <div class="contact-box">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <strong>고객센터:</strong> XXXX-XXXX<br>
+                            <span style="font-size: 13px; color: #868e96;">운영시간: 평일 09:00 ~ 18:00</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">💬</span>
+                        <div>
+                            <strong>앱 내 문의:</strong> '1:1 문의' 메뉴 활용
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 섹션 5: 개인정보 처리 안내 -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">5</span>
+                    개인정보 처리 안내
+                </h2>
+                <ul class="info-list">
+                    <!-- 약관 참고 링크는 추후 실제 약관 URL로 변경 필요 -->
+                    <li><strong>수집 항목:</strong> 이용자 위치 정보, 연락처, 결제 정보 등 <a href="http://mod-test.mobble.co.kr/dashboard" target="_blank" style="color: #167B3B;">약관 참고</a></li>
+                    <li><strong>수집 목적:</strong> 실증 서비스 제공, 운행 경로 최적화, 사고 대응 및 통계 분석</li>
+                    <li><strong>보유 기간:</strong> 서비스 종료 후 ㅇㅇ년 이내 (혹은 관련 법령에 따른 보존 기간)</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>본 서비스는 「스마트도시 조성 및 산업진흥 등에 관한 법률」에 따른 규제샌드박스 실증특례를 적용받고 있습니다.</p>
+            <p style="margin-top: 8px;">© 수요응답형 마을버스 동작구 DRT 사업(동작 CALL 버스)</p>
+        </footer>
+    </div>
+</body>
+</html>
