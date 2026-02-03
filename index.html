@@ -248,6 +248,79 @@
             padding-left: 20px;
         }
 
+        /* 토글 목록 스타일 */
+        .toggle-list {
+            list-style: none;
+            margin-left: 20px;
+            margin-top: 16px;
+        }
+
+        .toggle-item {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .toggle-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 15px;
+            font-weight: 600;
+            color: #167B3B;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background: linear-gradient(135deg, #f1f3f5 0%, #e9ecef 100%);
+        }
+
+        .toggle-button::before {
+            content: '▼';
+            display: inline-block;
+            transition: transform 0.3s ease;
+            margin-right: 12px;
+            color: #1AA459;
+            font-size: 12px;
+        }
+
+        .toggle-item.open .toggle-button::before {
+            transform: rotate(-180deg);
+        }
+
+        .toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            background-color: white;
+            transition: max-height 0.3s ease;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .toggle-item.open .toggle-content {
+            max-height: 500px;
+        }
+
+        .toggle-content-inner {
+            padding: 20px;
+            font-size: 14px;
+            color: #495057;
+            line-height: 1.6;
+        }
+
+        .toggle-content-inner::before {
+            content: '<!-- 내용을 여기에 추가해주세요 -->';
+            display: block;
+            color: #adb5bd;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px 16px;
@@ -444,7 +517,7 @@
                     <div class="contact-item">
                         <span class="contact-icon">💬</span>
                         <div>
-                            <strong>앱 내 문의:</strong> '1:1 문의' 메뉴 활용
+                            <strong>앱 내 문의:</strong> '1:1 문의' 메뉴 이용
                         </div>
                     </div>
                 </div>
@@ -457,10 +530,55 @@
                     개인정보 처리 안내
                 </h2>
                 <ul class="info-list">
-                    <!-- 약관 참고 링크는 추후 실제 약관 URL로 변경 필요 -->
-                    <li><strong>수집 항목:</strong> 이용자 위치 정보, 연락처, 결제 정보 등 <a href="http://mod-test.mobble.co.kr/dashboard" target="_blank" style="color: #167B3B;">약관 참고</a></li>
+                    <li><strong>수집 항목:</strong> 이용자 위치 정보, 연락처, 결제 정보 등</li>
                     <li><strong>수집 목적:</strong> 실증 서비스 제공, 운행 경로 최적화, 사고 대응 및 통계 분석</li>
                     <li><strong>보유 기간:</strong> 서비스 종료 후 ㅇㅇ년 이내 (혹은 관련 법령에 따른 보존 기간)</li>
+                    <li><strong>수집 정보 보호:</strong> 개인정보 보호 관련 법령에 따라 안전하게 관리 및 보험 가입 완료</li> 
+                    <li><strong>약관 상세</strong></li>
+                </ul>
+
+                <!-- 약관 토글 목록 -->
+                <ul class="toggle-list">
+                    <li class="toggle-item">
+                        <button class="toggle-button" onclick="this.parentElement.classList.toggle('open')">
+                            서비스 이용약관 (필수)
+                        </button>
+                        <div class="toggle-content">
+                            <div class="toggle-content-inner">
+                                <!-- 서비스 이용약관 내용을 여기에 추가해주세요 -->
+                            </div>
+                        </div>
+                    </li>
+                    <li class="toggle-item">
+                        <button class="toggle-button" onclick="this.parentElement.classList.toggle('open')">
+                            위치 기반 서비스 이용약관 (필수)
+                        </button>
+                        <div class="toggle-content">
+                            <div class="toggle-content-inner">
+                                <!-- 위치 기반 서비스 이용약관 내용을 여기에 추가해주세요 -->
+                            </div>
+                        </div>
+                    </li>
+                    <li class="toggle-item">
+                        <button class="toggle-button" onclick="this.parentElement.classList.toggle('open')">
+                            개인정보 처리방침 (필수)
+                        </button>
+                        <div class="toggle-content">
+                            <div class="toggle-content-inner">
+                                <!-- 개인정보 처리방침 내용을 여기에 추가해주세요 -->
+                            </div>
+                        </div>
+                    </li>
+                    <li class="toggle-item">
+                        <button class="toggle-button" onclick="this.parentElement.classList.toggle('open')">
+                            개인위치정보 처리방침 (필수)
+                        </button>
+                        <div class="toggle-content">
+                            <div class="toggle-content-inner">
+                                <!-- 개인위치정보 처리방침 내용을 여기에 추가해주세요 -->
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </section>
         </main>
